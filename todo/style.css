@@ -1,0 +1,238 @@
+/* =============================================================
+   SOLAR SYSTEM — style.css
+   New concepts in this file:
+     - input[type="range"] custom styling
+     - CSS transition on a panel (slide + fade)
+     - transform: translateY() for vertical centering
+     - ::-webkit-slider-thumb pseudo-element
+     - button styling (removing defaults)
+   ============================================================= */
+
+
+/* -------------------------------------------------------------
+   TODO 1 — Reset
+   Same as always: * { margin:0; padding:0; box-sizing:border-box }
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 2 — Body
+   background: #05080f
+   overflow: hidden
+   font-family: 'Georgia', serif
+   color: #e8d9b5
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 3 — Canvas
+   display: block
+   cursor: default
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 4 — Title panel
+   position: fixed, top: 24px, left: 28px
+   pointer-events: none   ← lets clicks fall through to the canvas
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 5 — Title panel h1
+   SELECTOR: #title-panel h1
+   font-size: 1.1rem
+   letter-spacing: 0.2em
+   opacity: 0.8
+   margin-bottom: 12px
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 6 — Hint text
+   SELECTOR: #title-panel .hint
+   font-size: 0.68rem
+   color: #445566
+   font-style: italic
+   margin-top: 8px
+   letter-spacing: 0.06em
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 7 — Controls row (speed label + slider + readout)
+   WHAT: Flex row, all items vertically centered.
+   SELECTOR: #controls
+   display: flex
+   align-items: center
+   gap: 10px
+   pointer-events: all   ← override the parent's pointer-events: none
+                            so the slider is actually clickable
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 8 — Control label
+   SELECTOR: .ctrl-label
+   font-size: 0.68rem
+   letter-spacing: 0.12em
+   color: #556677
+   text-transform: uppercase
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 9 — Speed readout text
+   SELECTOR: #speed-readout
+   font-size: 0.75rem
+   color: #8899aa
+   min-width: 32px
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 10 — Style the range slider track
+   NEW CONCEPT — input[type="range"]:
+     Attribute selectors let you target elements by their attributes.
+     input[type="range"] targets only <input> elements where type="range".
+
+   -webkit-appearance: none   ← removes the browser's default styling
+                                 so you can fully custom-style it
+   SELECTOR: input[type="range"]
+   -webkit-appearance: none
+   width: 100px
+   height: 2px
+   background: #334455
+   border-radius: 2px
+   outline: none
+   cursor: pointer
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 11 — Style the slider thumb (the draggable circle)
+   NEW CONCEPT — ::-webkit-slider-thumb:
+     A pseudo-element that targets the draggable handle of the slider.
+     Requires -webkit-appearance: none on the parent first.
+
+   SELECTOR: input[type="range"]::-webkit-slider-thumb
+   -webkit-appearance: none
+   width: 12px
+   height: 12px
+   background: #e8d9b5
+   border-radius: 50%
+   cursor: pointer
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 12 — Info panel base styles
+   WHAT: Fixed to the right side, vertically centered.
+
+   Centering vertically with fixed positioning:
+     top: 50%                         ← top edge at vertical center
+     transform: translateY(-50%)      ← shift up by half its own height
+   Same trick as horizontal centering but on the Y axis.
+
+   SELECTOR: #info-panel
+   position: fixed
+   top: 50%
+   right: 32px
+   transform: translateY(-50%)
+   background: rgba(5, 8, 15, 0.85)
+   border: 1px solid rgba(230, 215, 180, 0.12)
+   border-radius: 12px
+   padding: 28px 28px 24px
+   min-width: 220px
+   backdrop-filter: blur(8px)
+   transition: opacity 0.2s, transform 0.2s
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 13 — Hidden state for the info panel
+   WHAT: When class="hidden" is added, the panel fades out and
+         slides 20px to the right.
+   WHY opacity instead of display:none: display:none is instant —
+     it can't be animated. opacity can transition smoothly.
+     pointer-events:none stops it from blocking clicks when invisible.
+
+   SELECTOR: #info-panel.hidden
+   opacity: 0
+   pointer-events: none
+   transform: translateY(-50%) translateX(20px)
+
+   NOTE: You MUST include the translateY(-50%) again here.
+         transform replaces the whole previous transform value,
+         it doesn't add to it. If you only write translateX(20px),
+         the vertical centering breaks.
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 14 — Close button
+   WHAT: Remove all default button styles, position it top-right
+         of the panel, change color on hover.
+
+   SELECTOR: #close-btn
+   position: absolute     ← positions relative to #info-panel (which has position:fixed)
+   top: 12px
+   right: 14px
+   background: none       ← removes default button background
+   border: none           ← removes default button border
+   color: #445566
+   font-size: 0.9rem
+   cursor: pointer
+   line-height: 1
+   padding: 2px 4px
+
+   SELECTOR: #close-btn:hover
+   color: #e8d9b5
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 15 — Planet name heading inside panel
+   SELECTOR: #planet-name
+   font-size: 1.3rem
+   letter-spacing: 0.15em
+   color: #f0e6c8
+   margin-bottom: 20px
+------------------------------------------------------------- */
+/* your code here */
+
+
+/* -------------------------------------------------------------
+   TODO 16 — Fact rows (label stacked above value)
+   Each .fact-row is a flex column, same pattern as .stat in the lunar tracker.
+   SELECTOR: .fact-row
+   display: flex
+   flex-direction: column
+   gap: 2px
+   margin-bottom: 14px
+
+   SELECTOR: .fact-label
+   font-size: 0.62rem
+   letter-spacing: 0.15em
+   color: #556677
+   text-transform: uppercase
+
+   SELECTOR: .fact-value
+   font-size: 0.9rem
+   color: #c8ddf0
+------------------------------------------------------------- */
+/* your code here */
