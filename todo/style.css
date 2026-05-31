@@ -14,6 +14,11 @@
    Same as always: * { margin:0; padding:0; box-sizing:border-box }
 ------------------------------------------------------------- */
 /* your code here */
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
 
 
 /* -------------------------------------------------------------
@@ -24,7 +29,12 @@
    color: #e8d9b5
 ------------------------------------------------------------- */
 /* your code here */
-
+body {
+   overflow:hidden;
+   background: #05080f;
+   font-family: 'Georgia', serif;
+   color: #e8d9b5;
+}
 
 /* -------------------------------------------------------------
    TODO 3 — Canvas
