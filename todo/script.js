@@ -1,44 +1,21 @@
-// =============================================================
-// SOLAR SYSTEM — script.js
-// New concepts in this file:
-//   - class with constructor, methods, and this
-//   - new keyword to create instances
-//   - Math.cos/sin for circular orbit positions
-//   - canvas click events + getBoundingClientRect()
-//   - Array.some()
-//   - Object.entries() + map() + join() for dynamic HTML
-//   - ctx.translate() for drawing relative to a point
-//   - parseFloat() for converting string to number
-// =============================================================
+// Canvas Setup
+const canvas = document.getElementById('solar-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width  = window.innerWidth;
+canvas.height = window.innerHeight;
 
+// UI Elements
+const infoPanel = document.getElementById('info-panel');
+const closeBtn = document.getElementById('close-btn');
+const planetName = document.getElementById('planet-name');
+const planetFacts = document.getElementById('planet-facts');
+const speedSlider = document.getElementById('speed-slider');
+const speedReadout = document.getElementById('speed-readout');
 
-// -------------------------------------------------------------
-// TODO 1 — Canvas setup
-// Same as always. Get canvas, get ctx, set width and height.
-// -------------------------------------------------------------
-// your code here
+// State Variables
+let selectedPlanet = null;
+let speedMult = 1;
 
-
-// -------------------------------------------------------------
-// TODO 2 — Grab UI elements
-// Get these by id:
-//   'info-panel', 'close-btn', 'planet-name',
-//   'planet-facts', 'speed-slider', 'speed-readout'
-// -------------------------------------------------------------
-// your code here
-
-
-// -------------------------------------------------------------
-// TODO 3 — Declare state variables
-// WHAT:  Two mutable values that change during the app's life.
-//   selectedPlanet → the planet the user clicked (null = none selected)
-//   speedMult      → current speed multiplier (starts at 1)
-//
-// HOW:
-//   let selectedPlanet = null;
-//   let speedMult      = 1;
-// -------------------------------------------------------------
-// your code here
 
 
 // -------------------------------------------------------------
