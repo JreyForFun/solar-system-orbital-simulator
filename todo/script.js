@@ -128,7 +128,17 @@ let speedMult = 1;
 
 class Planet {
     constructor(data) {
-        // your code here
+        this.name = data.name;
+        this.orbitFraction = data.orbitFraction;
+        this.size = data.size;
+        this.color = data.color;
+        this.period = data.period;
+        this.facts = data.facts;
+        this.hashings = data.hashings || false;
+        this.angle = Math.random() * Math.PI * 2;
+        this.speed = (Math.PI * 2) / (data.period * 600);
+        this.x = 0;
+        this.y = 0;
     }
 
     update(cx, cy, scale, mult) {
