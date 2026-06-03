@@ -142,11 +142,17 @@ class Planet {
     }
 
     update(cx, cy, scale, mult) {
-        // your code here
+        this.angle += this.speed * mult;
+        this.x = cx + Math.cos(this.angle) * this.orbitFraction * scale;
+        this.y = cy + Math.sin(this.angle) * this.orbitFraction * scale;
     }
 
     drawOrbit(cx, cy, scale) {
-        // your code here
+        ctx.beginPath()
+        ctx.arc(cx, cy, this.orbitation * scale, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.07';
+        ctx.lineWidth = 1;
+        ctx.stroke();
     }
 
     drawRings() {
