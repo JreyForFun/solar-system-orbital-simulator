@@ -167,11 +167,36 @@ class Planet {
     }
 
     draw(isSelected) {
-        // your code here
+       if(this.hasRigns) this.drawRings()
+
+        ctx.shadowBlur = isSelected ? 35 : 14;
+        ctx.shadowColor = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Label
+        ctx.font= '10px Georgia';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+        ctx.fillText(this.name, this.x + this.size + 5, this.y + 4);
+
+        if(isSelected) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size + 6, 0, Math.PI * 2);
+        ctx.strokeStyle = ' rgba(255,255,255, 0.45)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
     }
 
     isClicked(mx, my) {
-        // your code here
+        this.x = mx;
+        this.my = my;
+
+        if(this.x <= this.size + 8 && this.y <= this.size + 8){
+            return true;
+        }
     }
 }
 
