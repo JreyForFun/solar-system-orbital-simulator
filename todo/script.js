@@ -156,7 +156,14 @@ class Planet {
     }
 
     drawRings() {
-        // your code here
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, this.size * 2.6, this.size * 0.65, 0.4, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(228, 210, 150, 0.55)';
+        ctx.lineWidth = 5;
+        ctx.stroke();
+        ctx.restore();
     }
 
     draw(isSelected) {
