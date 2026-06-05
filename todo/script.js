@@ -189,6 +189,7 @@ class Planet {
         ctx.lineWidth = 1;
         ctx.stroke();
     }
+}
 
     isClicked(mx, my) {
         this.x = mx;
@@ -197,7 +198,7 @@ class Planet {
         if(this.x <= this.size + 8 && this.y <= this.size + 8){
             return true;
         }
-    }
+    };
 }
 
 
@@ -248,7 +249,40 @@ class Planet {
 // -------------------------------------------------------------
 
 // your code here
-
+const planets = [
+    new Planet({
+        name: 'Mercury', orbitFraction: 0.20, size: 4, color: '#b5b5b5', period: 0.241,
+        facts: { 'Distance from Sun': '57.9M km', 'Orbital period': '88 days', 'Moons': '0', 'Surface temp': '−180 to 430°C', 'Diameter': '4,879 km' },
+    }),
+    new Planet({
+        name: 'Venus', orbitFraction: 0.30, size: 7, color: '#e8cda0', period: 0.615,
+        facts: { 'Distance from Sun': '108.2M km', 'Orbital period': '225 days', 'Moons': '0', 'Surface temp': '465°C', 'Diameter': '12,104 km' },
+    }),
+    new Planet({
+        name: 'Earth', orbitFraction: 0.40, size: 8, color: '#4fc3f7', period: 1.0,
+        facts: { 'Distance from Sun': '149.6M km', 'Orbital period': '365 days', 'Moons': '1', 'Surface temp': '−88 to 58°C', 'Diameter': '12,742 km' },
+    }),
+    new Planet({
+        name: 'Mars', orbitFraction: 0.51, size: 5, color: '#ef5350', period: 1.881,
+        facts: { 'Distance from Sun': '227.9M km', 'Orbital period': '687 days', 'Moons': '2', 'Surface temp': '−87 to −5°C', 'Diameter': '6,779 km' },
+    }),
+    new Planet({
+        name: 'Jupiter', orbitFraction: 0.64, size: 18, color: '#c8a882', period: 11.86,
+        facts: { 'Distance from Sun': '778.5M km', 'Orbital period': '11.9 yrs', 'Moons': '95', 'Surface temp': '−108°C', 'Diameter': '139,820 km' },
+    }),
+    new Planet({
+        name: 'Saturn', orbitFraction: 0.75, size: 14, color: '#e4d5a0', period: 29.46, hasRings: true,
+        facts: { 'Distance from Sun': '1.43B km', 'Orbital period': '29.5 yrs', 'Moons': '146', 'Surface temp': '−139°C', 'Diameter': '116,460 km' },
+    }),
+    new Planet({
+        name: 'Uranus', orbitFraction: 0.87, size: 11, color: '#80deea', period: 84.01,
+        facts: { 'Distance from Sun': '2.87B km', 'Orbital period': '84 yrs', 'Moons': '28', 'Surface temp': '−195°C', 'Diameter': '50,724 km' },
+    }),
+    new Planet({
+        name: 'Neptune', orbitFraction: 1.00, size: 10, color: '#5c6bc0', period: 164.8,
+        facts: { 'Distance from Sun': '4.5B km', 'Orbital period': '165 yrs', 'Moons': '16', 'Surface temp': '−201°C', 'Diameter': '49,244 km' },
+    }),
+];
 
 // -------------------------------------------------------------
 // TODO 6 — drawBackground()
@@ -256,7 +290,7 @@ class Planet {
 // -------------------------------------------------------------
 
 function drawBackground() {
-    // your code here
+    canvas = '#05080f';
 }
 
 
@@ -286,7 +320,20 @@ function drawBackground() {
 // -------------------------------------------------------------
 
 function drawSun(cx, cy) {
-    // your code here
+    const grad = ctx.createRadialGradient(cx, cy, 5, cx, cy, 90)
+    grad.addColorStop(0, 'rgba(255, 210, 80, 0.25')
+    grad.addColorStop(1, 'rgba(255,140,0,0')
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(cxc,cy,90,0,Math.PI * 2)
+    ctx,fill();
+
+    ctx.shadowBlur = 45;
+    ctx.shadowColor = '#ffaa00';
+    ctx.arc (cx,cy,24,0,Math.PI * 2);
+    ctx.fillStyle = '#ffd060';
+    ctx.fill();
+    ctx.shadowBlur = 0;
 }
 
 
