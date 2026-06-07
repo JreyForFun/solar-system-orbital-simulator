@@ -20,6 +20,7 @@ let isPaused = false;
 let realSpeedMode = false;
 
 const pauseBtn
+const
 
 // The Planets
 class Planet {
