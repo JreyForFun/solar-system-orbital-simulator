@@ -19,8 +19,10 @@ let savedSpeed = speedMult;
 let isPaused = false;
 let realSpeedMode = false;
 
-const pauseBtn
-const
+const pauseBtn = document.createElement('button');
+pauseBtn.textContent = 'Pause';
+pauseBtn.style = 'position:fixed;top:10px;left:10px;z-index:1000;';
+document.body.appendChild(pauseBtn);
 
 // The Planets
 class Planet {
