@@ -18,6 +18,10 @@ let speedMult = 1;
 let savedSpeed = speedMult;
 let isPaused = false;
 let realSpeedMode = false;
+let cameraAngle = 0;
+let isDragging = false;
+let dragLastX = 0;
+const cameraRadiusFactor = 0.12; 
 
 const controlsBar = document.getElementById('controls') || (() => {
   const d = document.createElement('div'); d.id = 'controls'; document.body.appendChild(d); return d;
@@ -79,6 +83,7 @@ class Planet {
         this.y = 0;
         this.trail = [];
         this.maxTrail = 60;
+        this.eccentricity = data.eccentricity || 0;
     }
 
     update(cx, cy, scale, mult) {
@@ -132,6 +137,15 @@ class Planet {
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
         ctx.fill();
+        if (this.name === 'Jupiter') {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.fillStyle = 'rgba(120,30,30,0.9)';
+        ctx.beginPath();
+        ctx.ellipse(this.size * 0.35, -this.size * 0.15, this.size * 0.7, this.size * 0.45, 0.35, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+        }
         ctx.shadowBlur = 0;
 
         // Label
@@ -155,6 +169,47 @@ class Planet {
     };
 }
 
+function drawMiniMap(cx, cy, scale) {
+  const w = 160, h = 160;
+  const mx = 12;
+  const my = canvas.height - h - 12;
+  ctx.save();
+  ctx.fillStyle = 'rgba(2,4,8,0.75)';
+  ctx.fillRect(mx, my, w, h);
+  const mcx = mx + w / 2;
+  const mcy = my + h / 2;
+
+  planets.forEach(p => {
+    const ecc = p.eccentricity || 0;
+    const a = p.orbitFraction * (w / 2);
+    const b = Math.max(1, a * (1 - ecc));
+    if (!Number.isFinite(a) || !Number.isFinite(b)) return;
+    ctx.beginPath();
+    ctx.ellipse(mcx, mcy, a, b, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(200,200,200,0.08)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+
+  planets.forEach(p => {
+    const ecc = p.eccentricity || 0;
+    const a = p.orbitFraction * (w / 2);
+    const b = Math.max(1, a * (1 - ecc));
+    if (!Number.isFinite(a) || !Number.isFinite(b)) return;
+    const px = mcx + Math.cos(p.angle) * a;
+    const py = mcy + Math.sin(p.angle) * b;
+    ctx.beginPath();
+    ctx.fillStyle = p.color;
+    ctx.arc(px, py, Math.max(1, Math.min(3, p.size * 0.25)), 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(mx + 2, my + 2, w - 4, h - 4);
+  ctx.restore();
+}
 
 // PLANET INSTANCES
 const planets = [
@@ -205,15 +260,7 @@ if (earth) {
 }
 
 // Great Red Spot on Jupiter
-if (this.name === 'Jupiter') {
-  ctx.save();
-  ctx.translate(this.x, this.y);
-  ctx.fillStyle = 'rgba(120, 30, 30, 0.9)';
-  ctx.beginPath();
-  ctx.ellipse(this.size * 0.35, -this.size * 0.15, this.size * 0.7, this.size * 0.45, 0.35, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-}
+
 
 // BACKGROUND
 function drawBackground() {
@@ -303,6 +350,19 @@ canvas.addEventListener('mousemove', (e) => {
     canvas.style.cursor = hovering ? 'pointer' : 'default';
 })
 
+canvas.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  dragLastX = e.clientX;
+});
+
+window.addEventListener('mouseup', () => { isDragging = false; });
+canvas.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  const dx = e.clientX - dragLastX;
+  dragLastX = e.clientX;
+  cameraAngle += dx * 0.005; // sensitivity
+});
+
 closeBtn.addEventListener('click', hideInfo);
 speedSlider.addEventListener('input', (e) =>{
    const v = parseFloat(e.target.value);
@@ -319,9 +379,17 @@ window.addEventListener('resize', () => { canvas.width = window.innerWidth; canv
 
 // Render
 function render() {
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    const scale = Math.min(canvas.width, canvas.height) * 0.44;
+    const baseCx = canvas.width / 2;
+    const baseCy = canvas.height / 2;
+    const baseScale = Math.min(canvas.width, canvas.height) * 0.44;
+
+    const camRadius = cameraRadiusFactor * baseScale;
+    const camOffsetX = Math.cos(cameraAngle) * camRadius;
+    const camOffsetY = Math.sin(cameraAngle) * camRadius;
+
+    const cx = baseCx + camOffsetX;
+    const cy = baseCy + camOffsetY;
+    const scale = baseScale;
 
     drawBackground();
     drawSun(cx, cy);
@@ -351,6 +419,7 @@ function render() {
         ctx.fill();
         }
     })
+    drawMiniMap(cx, cy, scale);
 
     requestAnimationFrame(render)
 }
