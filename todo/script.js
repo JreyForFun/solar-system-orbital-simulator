@@ -19,10 +19,45 @@ let savedSpeed = speedMult;
 let isPaused = false;
 let realSpeedMode = false;
 
+const controls = document.createElement('div');
+controls.id = 'controls';
+document.body.appendChild(controls);
+
 const pauseBtn = document.createElement('button');
+pauseBtn.id = 'pause-btn';
 pauseBtn.textContent = 'Pause';
-pauseBtn.style = 'position:fixed;top:10px;left:10px;z-index:1000;';
-document.body.appendChild(pauseBtn);
+
+const realBtn = document.createElement('button');
+realBtn.id = 'real-btn';
+realBtn.textContent = 'Real Speed';
+
+controls.append(pauseBtn, realBtn);
+
+pauseBtn.addEventListener('click', () => {
+    if(!isPaused) {
+        savedSpeed = speedMult;
+        speedMult = 0;
+        pauseBtn.textContent = 'Resume';
+        isPaused = true;
+    } else {
+        speedMult = savedSpeed;
+        pauseBtn.textContent = 'Pause';
+        isPaused = false;
+    }
+});
+
+realBtn.addEventListener('click', () => {
+    if(!realSpeedMode) {
+        savedSpeed = speedMult;
+        speedMult = 1;
+        realBtn.textContent = 'Simulated Speed';
+        realSpeedMode = true;
+    } else {
+        speedMult = savedSpeed;
+        realBtn.textContent = 'Real Speed';
+        realSpeedMode = false;
+    }
+    });
 
 // The Planets
 class Planet {
@@ -38,6 +73,8 @@ class Planet {
         this.speed = (Math.PI * 2) / (data.period * 600);
         this.x = 0;
         this.y = 0;
+        this.trail = [];
+        this.maxTrail = 60;
     }
 
     update(cx, cy, scale, mult) {
@@ -46,6 +83,8 @@ class Planet {
         if (!Number.isFinite(this.angle)) this.angle = Math.random() * Math.PI * 2;
         this.x = cx + Math.cos(this.angle) * this.orbitFraction * scale;
         this.y = cy + Math.sin(this.angle) * this.orbitFraction * scale;
+        this.trail.push({x: this.x, y: this.y});
+        if(this.trail.length > this.maxTrail) this.trail.shift();
     }
 
     drawOrbit(cx, cy, scale) {
@@ -68,6 +107,19 @@ class Planet {
     }
 
     draw(isSelected) {
+       if(this.trail.length > 1) {
+       for(let i = 0; i < this.trail.length - 1; i++) {
+        const p0 = this.trail[i];
+        const p1 = this.trail[i + 1];
+        const t = i / this.trail.length;
+        ctx.strokeStyle = `rgba(255,255,255,${t * 0.3})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(p0.x, p0.y);
+        ctx.lineTo(p1.x, p1.y);
+        ctx.stroke();
+       }
+    }
        if(this.hasRings) this.drawRings()
 
         ctx.shadowBlur = isSelected ? 35 : 14;

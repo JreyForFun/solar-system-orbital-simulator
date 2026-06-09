@@ -79,6 +79,7 @@ input[type="range"]::webkit-slider-thumb {
 }
 
 #info-panel {
+   font-family: 'Arial', serif;
    position: fixed;
    top: 50%;
    right: 32px;
@@ -140,3 +141,35 @@ input[type="range"]::webkit-slider-thumb {
    font-size: 0.9rem;
    color: #c8ddf0;
 }
+
+#controls {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px;
+  z-index: 1000;
+  background: rgba(5, 8, 15, 0.55);
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+#controls button {
+  appearance: none;
+  -webkit-appearance: none;
+  background: linear-gradient(180deg, #2b2f36, #1f2328);
+  color: #ffd;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform .08s ease, background .12s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+#controls button:hover { transform: translateY(-1px); background: linear-gradient(180deg,#353941,#23262b); }
+#controls button:active { transform: translateY(0); }
