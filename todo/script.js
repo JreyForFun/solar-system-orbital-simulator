@@ -19,9 +19,12 @@ let savedSpeed = speedMult;
 let isPaused = false;
 let realSpeedMode = false;
 
-const controls = document.createElement('div');
-controls.id = 'controls';
-document.body.appendChild(controls);
+const controlsBar = document.getElementById('controls') || (() => {
+  const d = document.createElement('div'); d.id = 'controls'; document.body.appendChild(d); return d;
+})();
+
+const btnRow = document.createElement('div');
+btnRow.className = 'ctrl-buttons';
 
 const pauseBtn = document.createElement('button');
 pauseBtn.id = 'pause-btn';
@@ -31,7 +34,8 @@ const realBtn = document.createElement('button');
 realBtn.id = 'real-btn';
 realBtn.textContent = 'Real Speed';
 
-controls.append(pauseBtn, realBtn);
+btnRow.append(pauseBtn, realBtn);
+controlsBar.append(btnRow);
 
 pauseBtn.addEventListener('click', () => {
     if(!isPaused) {

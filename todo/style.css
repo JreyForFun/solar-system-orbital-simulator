@@ -142,19 +142,12 @@ input[type="range"]::webkit-slider-thumb {
    color: #c8ddf0;
 }
 
-#controls {
-  position: fixed;
-  top: 12px;
-  left: 12px;
+#controls { flex-wrap: wrap; }       /* allow children to wrap to a new row */
+.ctrl-buttons {
+  width: 100%;
   display: flex;
   gap: 8px;
-  align-items: center;
-  padding: 6px;
-  z-index: 1000;
-  background: rgba(5, 8, 15, 0.55);
-  border-radius: 8px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  margin-top: 6px;
 }
 
 #controls button {
